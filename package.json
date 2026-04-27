@@ -1,0 +1,19 @@
+{
+  "name": "monohanzi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "validate:glyphs": "node scripts/validate-glyphs.mjs",
+    "test": "npm run validate:glyphs && npm run build"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

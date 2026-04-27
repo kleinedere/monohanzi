@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCharacterBySlug } from "../data/characters";
+import { withBase } from "../utils/paths";
+
+const firstCharacter = getCharacterBySlug("jia");
+---
+
+<BaseLayout
+  title="Monohanzi"
+  description="A quiet, visual Chinese character learning experience."
+>
+  <main class="home-page">
+    <header class="site-header">
+      <a class="brand" href={withBase("/")}>Monohanzi</a>
+    </header>
+
+    <section class="home-hero" aria-labelledby="home-title">
+      <p class="eyebrow">Character study</p>
+      <h1 id="home-title">Monohanzi</h1>
+      <p>
+        A quiet page for looking closely at one Chinese character, its visible
+        structure, and a few useful words.
+      </p>
+      {
+        firstCharacter && (
+          <a class="primary-link" href={withBase(`/characters/${firstCharacter.slug}/`)}>
+            <span lang="zh-Hans">{firstCharacter.character}</span>
+            <span>Start with {firstCharacter.coreMeaning}</span>
+          </a>
+        )
+      }
+    </section>
+  </main>
+</BaseLayout>

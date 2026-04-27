@@ -1,0 +1,33 @@
+<svg class="glyph-svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="jia-title jia-desc" xmlns="http://www.w3.org/2000/svg">
+  <title id="jia-title">家</title>
+  <desc id="jia-desc">The character 家 is divided into an upper roof component and a lower pig-like component.</desc>
+  <g
+    id="component-roof"
+    class="glyph-component"
+    data-component-id="roof"
+    tabindex="0"
+    role="button"
+    aria-label="宀, roof or house, semantic component"
+  >
+    <path d="M512 118 L512 190" />
+    <path d="M218 306 C326 262 698 262 806 306" />
+    <path d="M218 306 L176 426" />
+    <path d="M806 306 L848 426" />
+  </g>
+  <g
+    id="component-pig"
+    class="glyph-component"
+    data-component-id="pig"
+    tabindex="0"
+    role="button"
+    aria-label="豕, pig, historical and visual component"
+  >
+    <path d="M374 418 C456 394 582 394 668 416" />
+    <path d="M542 422 C500 494 436 552 356 592" />
+    <path d="M506 492 C574 560 610 652 590 742 C576 812 522 866 452 898" />
+    <path d="M452 558 C416 626 360 680 294 718" />
+    <path d="M578 544 C650 574 718 628 774 694" />
+    <path d="M594 666 C666 724 730 790 786 866" />
+    <path d="M488 646 C444 678 398 706 350 728" />
+  </g>
+</svg>

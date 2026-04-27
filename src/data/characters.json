@@ -1,0 +1,89 @@
+[
+  {
+    "slug": "jia",
+    "character": "家",
+    "traditional": "家",
+    "pinyin": "jia1",
+    "pinyinDisplay": "jiā",
+    "coreMeaning": "home; family",
+    "shortGloss": "A home, household, or family.",
+    "explanation": "家 combines a roof-like 宀 with a 豕-like lower form, traditionally connected with a pig inside a dwelling. For a modern learner, the clearest reading is visual and semantic: a house-shaped top over a domestic lower form.",
+    "radical": "宀",
+    "strokeCount": 10,
+    "frequencyBand": "common",
+    "glyph": {
+      "sourcePath": "src/assets/glyphs/jia.svg",
+      "viewBox": "0 0 1024 1024",
+      "title": "家",
+      "description": "The character 家 is shown as two inspectable component groups: 宀 above and a 豕-like form below."
+    },
+    "components": [
+      {
+        "id": "roof",
+        "form": "宀",
+        "role": "semantic component",
+        "meaning": "roof / house",
+        "note": "This top component contributes the idea of a dwelling or covered place.",
+        "confidence": "high"
+      },
+      {
+        "id": "pig",
+        "form": "豕",
+        "role": "historical / visual component",
+        "meaning": "pig",
+        "note": "The lower form is traditionally explained through 豕. Treat it as a useful historical and visual clue, not as a standalone modern meaning inside every use of 家.",
+        "confidence": "medium"
+      }
+    ],
+    "examples": [
+      {
+        "word": "家人",
+        "pinyin": "jiā rén",
+        "gloss": "family member; family"
+      },
+      {
+        "word": "回家",
+        "pinyin": "huí jiā",
+        "gloss": "to go home"
+      },
+      {
+        "word": "国家",
+        "pinyin": "guó jiā",
+        "gloss": "country; nation"
+      },
+      {
+        "word": "家里",
+        "pinyin": "jiā lǐ",
+        "gloss": "at home; in the home"
+      }
+    ],
+    "related": [
+      {
+        "character": "安",
+        "label": "roof family",
+        "note": "Shares the roof-like 宀 component."
+      },
+      {
+        "character": "字",
+        "label": "roof family",
+        "note": "Another common character built under 宀."
+      },
+      {
+        "character": "室",
+        "label": "roof family",
+        "note": "A room or chamber under the same visual top."
+      },
+      {
+        "character": "豕",
+        "label": "component",
+        "note": "The lower component used in the traditional explanation."
+      },
+      {
+        "character": "宀",
+        "label": "component",
+        "note": "The roof component that often points toward houses or covered spaces."
+      }
+    ],
+    "status": "published"
+  }
+]

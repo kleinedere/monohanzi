@@ -1,0 +1,213 @@
+---
+import type { CharacterEntry } from "../data/characters";
+
+interface Props {
+  character: CharacterEntry;
+  svg: string;
+}
+
+const { character, svg } = Astro.props;
+const defaultComponentId = character.components[0]?.id ?? "";
+---
+
+<section
+  class="inspectable-glyph"
+  data-inspectable-glyph
+  data-default-component={defaultComponentId}
+  aria-label={`Inspectable glyph for ${character.character}`}
+>
+  <div class="glyph-stage" set:html={svg} />
+
+  <div class="component-dock" aria-label={`${character.character} components`}>
+    <div class="component-button-list" role="list">
+      {
+        character.components.map((component, index) => (
+          <button
+            class:list={["component-button", { "is-selected": index === 0 }]}
+            type="button"
+            data-component-button={component.id}
+            aria-pressed={index === 0 ? "true" : "false"}
+          >
+            <span class="component-form" lang="zh-Hans">{component.form}</span>
+            <span>
+              <span class="component-name">{component.meaning}</span>
+              <span class="component-role">{component.role}</span>
+            </span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="component-detail-stack">
+      <article class="component-empty" data-component-empty hidden>
+        <p class="detail-kicker">Structure</p>
+        <h2>{character.character}</h2>
+        <p>{character.shortGloss}</p>
+      </article>
+      {
+        character.components.map((component, index) => (
+          <article
+            class="component-detail"
+            data-component-detail={component.id}
+            hidden={index !== 0}
+          >
+            <p class="detail-kicker">Component</p>
+            <h2>
+              <span lang="zh-Hans">{component.form}</span>
+              <span>{component.meaning}</span>
+            </h2>
+            <p>{component.note}</p>
+            <dl>
+              <div>
+                <dt>Role</dt>
+                <dd>{component.role}</dd>
+              </div>
+              <div>
+                <dt>Confidence</dt>
+                <dd>{component.confidence}</dd>
+              </div>
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const selectableSelector = "[data-component-id], [data-component-button]";
+
+  function initInspectableGlyph(root) {
+    if (root.dataset.ready === "true") {
+      return;
+    }
+
+    root.dataset.ready = "true";
+
+    const groups = Array.from(root.querySelectorAll("[data-component-id]"));
+    const buttons = Array.from(root.querySelectorAll("[data-component-button]"));
+    const details = Array.from(root.querySelectorAll("[data-component-detail]"));
+    const empty = root.querySelector("[data-component-empty]");
+    const ids = new Set([
+      ...groups.map((group) => group.getAttribute("data-component-id")),
+      ...buttons.map((button) => button.getAttribute("data-component-button"))
+    ]);
+
+    function setSelected(id) {
+      if (!id || !ids.has(id)) {
+        clearSelected();
+        return;
+      }
+
+      root.dataset.selectedComponent = id;
+
+      groups.forEach((group) => {
+        const isSelected = group.getAttribute("data-component-id") === id;
+        group.classList.toggle("is-selected", isSelected);
+        group.classList.toggle("is-muted", !isSelected);
+        group.setAttribute("aria-pressed", String(isSelected));
+      });
+
+      buttons.forEach((button) => {
+        const isSelected = button.getAttribute("data-component-button") === id;
+        button.classList.toggle("is-selected", isSelected);
+        button.setAttribute("aria-pressed", String(isSelected));
+      });
+
+      details.forEach((detail) => {
+        detail.hidden = detail.getAttribute("data-component-detail") !== id;
+      });
+
+      if (empty) {
+        empty.hidden = true;
+      }
+    }
+
+    function clearSelected() {
+      delete root.dataset.selectedComponent;
+
+      groups.forEach((group) => {
+        group.classList.remove("is-selected", "is-muted");
+        group.setAttribute("aria-pressed", "false");
+      });
+
+      buttons.forEach((button) => {
+        button.classList.remove("is-selected");
+        button.setAttribute("aria-pressed", "false");
+      });
+
+      details.forEach((detail) => {
+        detail.hidden = true;
+      });
+
+      if (empty) {
+        empty.hidden = false;
+      }
+    }
+
+    groups.forEach((group) => {
+      const id = group.getAttribute("data-component-id");
+
+      group.addEventListener("pointerenter", () => setSelected(id));
+      group.addEventListener("focus", () => setSelected(id));
+      group.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setSelected(id);
+      });
+      group.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setSelected(id);
+        }
+      });
+    });
+
+    buttons.forEach((button) => {
+      const id = button.getAttribute("data-component-button");
+
+      button.addEventListener("pointerenter", () => setSelected(id));
+      button.addEventListener("focus", () => setSelected(id));
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setSelected(id);
+      });
+    });
+
+    root.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      if (!target.closest(selectableSelector)) {
+        clearSelected();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (target instanceof Element && !root.contains(target)) {
+        clearSelected();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        clearSelected();
+      }
+    });
+
+    setSelected(root.dataset.defaultComponent);
+  }
+
+  function initAllInspectableGlyphs() {
+    document
+      .querySelectorAll("[data-inspectable-glyph]")
+      .forEach((root) => initInspectableGlyph(root));
+  }
+
+  initAllInspectableGlyphs();
+  document.addEventListener("astro:page-load", initAllInspectableGlyphs);
+</script>

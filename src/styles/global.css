@@ -1,0 +1,556 @@
+:root {
+  color-scheme: light;
+  --page: #f7f7f2;
+  --surface: #ffffff;
+  --ink: #20221f;
+  --muted: #626860;
+  --line: #d9ddd4;
+  --soft-line: #ebece7;
+  --accent: #b33d2e;
+  --accent-quiet: #f2ded9;
+  --green: #2f685f;
+  --gold: #a16c20;
+  --focus: #155bd5;
+  --shadow: 0 24px 70px rgba(32, 34, 31, 0.11);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--page);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 440px),
+    var(--page);
+}
+
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.home-page,
+.character-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 78px;
+  gap: 24px;
+}
+
+.brand {
+  font-size: 0.92rem;
+  font-weight: 740;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+
+.site-header nav a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.site-header nav span[lang] {
+  color: var(--ink);
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 1.18rem;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--green);
+  font-size: 0.75rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-hero {
+  min-height: calc(100svh - 78px);
+  display: grid;
+  align-content: center;
+  max-width: 760px;
+  padding: 40px 0 14vh;
+}
+
+.home-hero h1 {
+  margin: 0;
+  font-size: clamp(3rem, 11vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+.home-hero p:not(.eyebrow) {
+  max-width: 560px;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.65;
+}
+
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  width: fit-content;
+  margin-top: 18px;
+  padding: 14px 18px;
+  border: 1px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.primary-link span[lang] {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.study-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 82px);
+  min-height: calc(100svh - 78px);
+  padding: 24px 0 72px;
+}
+
+.glyph-column {
+  min-width: 0;
+}
+
+.meaning-column {
+  min-width: 0;
+}
+
+.meaning-column h1 {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  font-size: clamp(2.65rem, 7vw, 5.9rem);
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.meaning-column h1 span[lang] {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: clamp(6.6rem, 17vw, 13rem);
+  line-height: 0.86;
+  font-weight: 500;
+}
+
+.pinyin {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 28px 0 0;
+  color: var(--accent);
+  font-size: 1.45rem;
+  font-weight: 760;
+}
+
+.pinyin span {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.short-gloss {
+  max-width: 470px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1.65;
+}
+
+.meta-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 34px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--line);
+}
+
+.meta-list div {
+  min-width: 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 760;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+dd {
+  margin: 5px 0 0;
+  font-weight: 720;
+}
+
+.inspectable-glyph {
+  display: grid;
+  gap: 22px;
+}
+
+.glyph-stage {
+  display: grid;
+  place-items: center;
+  min-height: 420px;
+  padding: clamp(12px, 3vw, 28px);
+}
+
+.glyph-stage svg {
+  width: min(100%, 640px);
+  height: auto;
+  overflow: visible;
+}
+
+.glyph-component {
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+}
+
+.glyph-component path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 56;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    opacity 180ms ease,
+    stroke 180ms ease,
+    stroke-width 180ms ease;
+}
+
+.glyph-component.is-selected path,
+.glyph-component:focus-visible path {
+  stroke: var(--accent);
+  stroke-width: 64;
+}
+
+.glyph-component.is-muted path {
+  opacity: 0.24;
+}
+
+.component-dock {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.component-button-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.component-button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 76px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.64);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.component-button.is-selected {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  background: var(--accent-quiet);
+}
+
+.component-button:hover {
+  transform: translateY(-1px);
+}
+
+.component-form {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: var(--surface);
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.component-name,
+.component-role {
+  display: block;
+  min-width: 0;
+}
+
+.component-name {
+  font-weight: 760;
+}
+
+.component-role {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.component-detail-stack {
+  min-height: 178px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.component-detail h2,
+.component-empty h2,
+.explanation-band h2,
+.learning-grid h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.component-detail h2 {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.component-detail h2 span[lang] {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 2.4rem;
+}
+
+.component-detail p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.component-empty h2 {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 3rem;
+}
+
+.component-empty p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.detail-kicker {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.component-detail dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0 0;
+}
+
+.explanation-band {
+  display: grid;
+  gap: 8px;
+  max-width: 830px;
+  padding: 76px 0;
+  border-top: 1px solid var(--line);
+}
+
+.explanation-band p:not(.eyebrow) {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 1.18rem;
+  line-height: 1.75;
+}
+
+.learning-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 76px);
+  padding: 72px 0 110px;
+  border-top: 1px solid var(--line);
+}
+
+.example-list,
+.related-list {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.example-list li {
+  display: grid;
+  grid-template-columns: auto minmax(120px, 0.5fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--soft-line);
+}
+
+.example-word {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.example-pinyin {
+  color: var(--accent);
+  font-weight: 720;
+}
+
+.example-gloss {
+  color: var(--muted);
+}
+
+.related-list li {
+  display: grid;
+  gap: 8px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--soft-line);
+}
+
+.related-list p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.related-chip,
+.related-list a {
+  display: inline-flex;
+  gap: 10px;
+  align-items: baseline;
+  width: fit-content;
+  font-weight: 740;
+  text-decoration: none;
+}
+
+.related-chip span[lang],
+.related-list a span[lang] {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 1.7rem;
+}
+
+@media (max-width: 900px) {
+  .study-hero,
+  .learning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .study-hero {
+    min-height: 0;
+    padding-top: 18px;
+  }
+
+  .glyph-stage {
+    min-height: 330px;
+  }
+
+  .component-dock {
+    grid-template-columns: 1fr;
+  }
+
+  .meaning-column h1 span[lang] {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .home-page,
+  .character-page {
+    width: min(100% - 22px, 1180px);
+  }
+
+  .site-header {
+    min-height: 68px;
+  }
+
+  .home-hero {
+    min-height: calc(100svh - 68px);
+  }
+
+  .component-button-list,
+  .meta-list,
+  .component-detail dl {
+    grid-template-columns: 1fr;
+  }
+
+  .example-list li {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .primary-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

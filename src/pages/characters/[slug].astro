@@ -1,0 +1,127 @@
+---
+import InspectableGlyph from "../../components/InspectableGlyph.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { characters } from "../../data/characters";
+import type { CharacterEntry } from "../../data/characters";
+import { withBase } from "../../utils/paths";
+import jiaSvg from "../../assets/glyphs/jia.svg?raw";
+
+export function getStaticPaths() {
+  return characters
+    .filter((character) => character.status === "published")
+    .map((character) => ({
+      params: { slug: character.slug },
+      props: { character }
+    }));
+}
+
+interface Props {
+  character: CharacterEntry;
+}
+
+const { character } = Astro.props;
+const glyphs: Record<string, string> = {
+  jia: jiaSvg
+};
+const glyphSvg = glyphs[character.slug] ?? "";
+const pageTitle = `${character.character} ${character.pinyinDisplay} | Monohanzi`;
+---
+
+<BaseLayout title={pageTitle} description={character.shortGloss}>
+  <main class="character-page">
+    <header class="site-header">
+      <a class="brand" href={withBase("/")}>Monohanzi</a>
+      <nav aria-label="Character navigation">
+        <a href={withBase(`/characters/${character.slug}/`)} aria-current="page">
+          <span lang="zh-Hans">{character.character}</span>
+          <span>{character.pinyinDisplay}</span>
+        </a>
+      </nav>
+    </header>
+
+    <section class="study-hero" aria-labelledby="character-title">
+      <div class="glyph-column">
+        <InspectableGlyph character={character} svg={glyphSvg} />
+      </div>
+
+      <div class="meaning-column">
+        <p class="eyebrow">Character</p>
+        <h1 id="character-title">
+          <span lang="zh-Hans">{character.character}</span>
+          <span>{character.coreMeaning}</span>
+        </h1>
+        <p class="pinyin">
+          {character.pinyinDisplay}
+          <span>{character.pinyin}</span>
+        </p>
+        <p class="short-gloss">{character.shortGloss}</p>
+
+        <dl class="meta-list">
+          <div>
+            <dt>Radical</dt>
+            <dd lang="zh-Hans">{character.radical}</dd>
+          </div>
+          <div>
+            <dt>Strokes</dt>
+            <dd>{character.strokeCount}</dd>
+          </div>
+          <div>
+            <dt>Frequency</dt>
+            <dd>{character.frequencyBand}</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="explanation-band" aria-labelledby="explanation-title">
+      <p class="eyebrow">How to think about it</p>
+      <h2 id="explanation-title">{character.shortGloss}</h2>
+      <p>{character.explanation}</p>
+    </section>
+
+    <section class="learning-grid" aria-label={`${character.character} examples and related characters`}>
+      <div>
+        <p class="eyebrow">Examples</p>
+        <h2>Useful words</h2>
+        <ul class="example-list">
+          {
+            character.examples.map((example) => (
+              <li>
+                <span class="example-word" lang="zh-Hans">{example.word}</span>
+                <span class="example-pinyin">{example.pinyin}</span>
+                <span class="example-gloss">{example.gloss}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow">Related</p>
+        <h2>Nearby forms</h2>
+        <ul class="related-list">
+          {
+            character.related.map((related) => (
+              <li>
+                {
+                  related.href ? (
+                    <a href={withBase(related.href)}>
+                      <span lang="zh-Hans">{related.character}</span>
+                      <span>{related.label}</span>
+                    </a>
+                  ) : (
+                    <span class="related-chip">
+                      <span lang="zh-Hans">{related.character}</span>
+                      <span>{related.label}</span>
+                    </span>
+                  )
+                }
+                <p>{related.note}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
