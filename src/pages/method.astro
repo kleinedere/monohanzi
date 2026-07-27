@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/paths";
+---
+
+<BaseLayout
+  title="Method | Monohanzi"
+  description="How Monohanzi presents components, evidence, and uncertainty."
+>
+  <main class="text-page">
+    <header class="site-header">
+      <a class="brand" href={withBase("/")}>Monohanzi</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href={withBase("/")}>Explore</a>
+        <a href={withBase("/method/")} aria-current="page">Method</a>
+      </nav>
+    </header>
+
+    <article class="editorial-page">
+      <p class="eyebrow">Method</p>
+      <h1>Useful structure, honestly labeled.</h1>
+      <p class="lede">
+        Monohanzi helps you see a character’s internal structure without
+        pretending every visible piece has one simple historical story.
+      </p>
+
+      <section>
+        <h2>What “component” means here</h2>
+        <p>
+          Component is our broad word for a useful region of a glyph. A
+          component may contribute meaning, suggest sound, act as the dictionary
+          radical, preserve history, or simply provide a practical visual region.
+          Those jobs are shown separately on each page.
+        </p>
+      </section>
+
+      <section>
+        <h2>How to read confidence</h2>
+        <dl class="definition-list">
+          <div>
+            <dt>High</dt>
+            <dd>The form or role is well supported and straightforward.</dd>
+          </div>
+          <div>
+            <dt>Medium</dt>
+            <dd>The explanation is useful but needs historical or visual qualification.</dd>
+          </div>
+          <div>
+            <dt>Low</dt>
+            <dd>The analysis is disputed or deliberately tentative.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section>
+        <h2>The five-page prototype</h2>
+        <p>
+          This first collection intentionally tests five different cases: a
+          meaning-based pairing, a semantic–phonetic character, an enclosure, a
+          compressed historical form, and a modern shape that should only be
+          split visually. The source notes on each page make the current evidence
+          visible while the editorial method develops.
+        </p>
+      </section>
+
+      <section>
+        <h2>Glyph sources</h2>
+        <p>
+          The target pipeline uses
+          <a href="https://github.com/Connum/hanzivg">Connum/HanziVG</a>
+          as the first source to inspect, followed by technical and editorial
+          review. The current five glyphs use HanziVG’s original stroke paths
+          unchanged. Monohanzi only removes the stroke-number layer and adapts
+          the existing groups, IDs, and accessibility metadata so those paths
+          can be highlighted in place.
+        </p>
+        <p><a href={withBase("/credits/")}>Read asset and license notes →</a></p>
+      </section>
+    </article>
+  </main>
+</BaseLayout>

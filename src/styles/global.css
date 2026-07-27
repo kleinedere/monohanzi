@@ -83,6 +83,17 @@ a:focus-visible {
   text-decoration: none;
 }
 
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 740;
+}
+
 .site-header nav span[lang] {
   color: var(--ink);
   font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
@@ -141,9 +152,154 @@ a:focus-visible {
   line-height: 1;
 }
 
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.hero-actions .primary-link {
+  margin-top: 0;
+}
+
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 58px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.character-browser {
+  padding: 90px 0 120px;
+  border-top: 1px solid var(--line);
+}
+
+.browser-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.48fr);
+  gap: 36px;
+  align-items: end;
+}
+
+.browser-heading h2,
+.page-notes h2 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.search-field {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 720;
+}
+
+.search-field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.search-field input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.search-status {
+  margin: 30px 0 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.character-grid li {
+  min-width: 0;
+}
+
+.character-grid a {
+  display: flex;
+  flex-direction: column;
+  min-height: 330px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.character-grid a:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  background: var(--surface);
+}
+
+.card-character {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: clamp(4.2rem, 8vw, 6rem);
+  line-height: 1;
+}
+
+.card-reading {
+  margin-top: 18px;
+  color: var(--accent);
+  font-weight: 760;
+}
+
+.character-grid strong {
+  margin-top: 5px;
+  font-size: 1.08rem;
+}
+
+.card-gloss {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.card-action {
+  margin-top: auto;
+  padding-top: 22px;
+  color: var(--green);
+  font-size: 0.82rem;
+  font-weight: 760;
+}
+
+.empty-results {
+  padding: 32px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+
 .study-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
   align-items: center;
   gap: clamp(28px, 6vw, 82px);
   min-height: calc(100svh - 78px);
@@ -165,13 +321,6 @@ a:focus-visible {
   font-size: clamp(2.65rem, 7vw, 5.9rem);
   line-height: 0.96;
   letter-spacing: 0;
-}
-
-.meaning-column h1 span[lang] {
-  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
-  font-size: clamp(6.6rem, 17vw, 13rem);
-  line-height: 0.86;
-  font-weight: 500;
 }
 
 .pinyin {
@@ -241,7 +390,7 @@ dd {
 }
 
 .glyph-stage svg {
-  width: min(100%, 640px);
+  width: min(100%, 700px);
   height: auto;
   overflow: visible;
 }
@@ -250,28 +399,25 @@ dd {
   color: var(--ink);
   cursor: pointer;
   outline: none;
+  transition: color 180ms ease;
 }
 
 .glyph-component path {
   fill: none;
   stroke: currentColor;
-  stroke-width: 56;
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition:
-    opacity 180ms ease,
-    stroke 180ms ease,
-    stroke-width 180ms ease;
+  transition: stroke 180ms ease;
 }
 
 .glyph-component.is-selected path,
 .glyph-component:focus-visible path {
   stroke: var(--accent);
-  stroke-width: 64;
 }
 
-.glyph-component.is-muted path {
-  opacity: 0.24;
+.glyph-component.is-muted {
+  color: color-mix(in srgb, var(--ink) 24%, var(--page));
 }
 
 .component-dock {
@@ -378,11 +524,6 @@ dd {
   line-height: 1.65;
 }
 
-.component-empty h2 {
-  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
-  font-size: 3rem;
-}
-
 .component-empty p {
   color: var(--muted);
   line-height: 1.65;
@@ -473,6 +614,173 @@ dd {
   line-height: 1.55;
 }
 
+.page-notes {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  gap: clamp(30px, 7vw, 90px);
+  padding: 72px 0;
+  border-top: 1px solid var(--line);
+}
+
+.page-notes h2 {
+  max-width: 680px;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+.source-list,
+.asset-list {
+  display: grid;
+  gap: 14px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.source-list li {
+  padding-top: 14px;
+  border-top: 1px solid var(--soft-line);
+}
+
+.source-list a {
+  font-weight: 740;
+}
+
+.source-list p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.provenance-list,
+.definition-list {
+  display: grid;
+  align-content: start;
+  gap: 1px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--line);
+}
+
+.provenance-list div,
+.definition-list div {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.study-navigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 0 0 110px;
+}
+
+.study-navigation a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 84px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+}
+
+.study-navigation span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 720;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.study-navigation strong[lang] {
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 2rem;
+}
+
+.text-page {
+  width: min(940px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.editorial-page {
+  padding: clamp(70px, 10vw, 130px) 0 120px;
+}
+
+.editorial-page > h1 {
+  max-width: 800px;
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+.editorial-page .lede {
+  max-width: 700px;
+  margin: 30px 0 80px;
+  color: var(--muted);
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  line-height: 1.65;
+}
+
+.editorial-page section {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.42fr) minmax(0, 1fr);
+  gap: 40px;
+  padding: 42px 0;
+  border-top: 1px solid var(--line);
+}
+
+.editorial-page section h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.editorial-page section > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.editorial-page section > p + p {
+  grid-column: 2;
+}
+
+.definition-list dd {
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.asset-list {
+  margin-top: 0;
+}
+
+.asset-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--soft-line);
+}
+
+.asset-list span[lang] {
+  grid-row: 1 / 4;
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+  font-size: 2.4rem;
+}
+
+.asset-list span:not([lang]) {
+  color: var(--muted);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
 .related-chip,
 .related-list a {
   display: inline-flex;
@@ -491,8 +799,14 @@ dd {
 
 @media (max-width: 900px) {
   .study-hero,
-  .learning-grid {
+  .learning-grid,
+  .browser-heading,
+  .page-notes {
     grid-template-columns: 1fr;
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .study-hero {
@@ -508,8 +822,13 @@ dd {
     grid-template-columns: 1fr;
   }
 
-  .meaning-column h1 span[lang] {
-    display: none;
+  .editorial-page section {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .editorial-page section > p + p {
+    grid-column: 1;
   }
 }
 
@@ -529,8 +848,17 @@ dd {
 
   .component-button-list,
   .meta-list,
-  .component-detail dl {
+  .component-detail dl,
+  .study-navigation {
     grid-template-columns: 1fr;
+  }
+
+  .character-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-grid a {
+    min-height: 270px;
   }
 
   .example-list li {
@@ -540,6 +868,15 @@ dd {
 
   .primary-link {
     width: 100%;
+    justify-content: center;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .secondary-link {
     justify-content: center;
   }
 }

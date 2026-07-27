@@ -1,15 +1,12 @@
 ---
 import InspectableGlyph from "../../components/InspectableGlyph.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { characters } from "../../data/characters";
+import { publishedCharacters } from "../../data/characters";
 import type { CharacterEntry } from "../../data/characters";
 import { withBase } from "../../utils/paths";
-import jiaSvg from "../../assets/glyphs/jia.svg?raw";
 
 export function getStaticPaths() {
-  return characters
-    .filter((character) => character.status === "published")
-    .map((character) => ({
+  return publishedCharacters.map((character) => ({
       params: { slug: character.slug },
       props: { character }
     }));
@@ -20,10 +17,21 @@ interface Props {
 }
 
 const { character } = Astro.props;
-const glyphs: Record<string, string> = {
-  jia: jiaSvg
-};
-const glyphSvg = glyphs[character.slug] ?? "";
+const glyphModules = import.meta.glob("../../assets/glyphs/*.svg", {
+  eager: true,
+  query: "?raw",
+  import: "default"
+}) as Record<string, string>;
+const glyphFile = character.glyph.sourcePath.split("/").pop();
+const glyphSvg = glyphModules[`../../assets/glyphs/${glyphFile}`] ?? "";
+const characterIndex = publishedCharacters.findIndex(({ slug }) => slug === character.slug);
+const previousCharacter = publishedCharacters[
+  (characterIndex - 1 + publishedCharacters.length) % publishedCharacters.length
+];
+const nextCharacter = publishedCharacters[(characterIndex + 1) % publishedCharacters.length];
+const randomRoutes = publishedCharacters.map(({ slug }) =>
+  withBase(`/characters/${slug}/`)
+);
 const pageTitle = `${character.character} ${character.pinyinDisplay} | Monohanzi`;
 ---
 
@@ -31,11 +39,9 @@ const pageTitle = `${character.character} ${character.pinyinDisplay} | Monohanzi
   <main class="character-page">
     <header class="site-header">
       <a class="brand" href={withBase("/")}>Monohanzi</a>
-      <nav aria-label="Character navigation">
-        <a href={withBase(`/characters/${character.slug}/`)} aria-current="page">
-          <span lang="zh-Hans">{character.character}</span>
-          <span>{character.pinyinDisplay}</span>
-        </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href={withBase("/")}>Explore</a>
+        <a href={withBase("/method/")}>Method</a>
       </nav>
     </header>
 
@@ -47,7 +53,6 @@ const pageTitle = `${character.character} ${character.pinyinDisplay} | Monohanzi
       <div class="meaning-column">
         <p class="eyebrow">Character</p>
         <h1 id="character-title">
-          <span lang="zh-Hans">{character.character}</span>
           <span>{character.coreMeaning}</span>
         </h1>
         <p class="pinyin">
@@ -123,5 +128,67 @@ const pageTitle = `${character.character} ${character.pinyinDisplay} | Monohanzi
         </ul>
       </div>
     </section>
+
+    <section class="page-notes" aria-labelledby="sources-title">
+      <div>
+        <p class="eyebrow">Sources &amp; review</p>
+        <h2 id="sources-title">What this page is based on</h2>
+        <ul class="source-list">
+          {
+            character.sources.map((source) => (
+              <li>
+                <a href={source.href} rel="noreferrer">{source.title}</a>
+                <p>{source.note}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <dl class="provenance-list">
+        <div>
+          <dt>Glyph source</dt>
+          <dd>{character.glyph.source.repository}</dd>
+        </div>
+        <div>
+          <dt>Revision</dt>
+          <dd>{character.glyph.source.revision}</dd>
+        </div>
+        <div>
+          <dt>License</dt>
+          <dd>{character.glyph.source.license}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <nav class="study-navigation" aria-label="Continue studying">
+      <a href={withBase(`/characters/${previousCharacter.slug}/`)}>
+        <span>Previous</span>
+        <strong lang="zh-Hans">{previousCharacter.character}</strong>
+      </a>
+      <a
+        href={withBase(`/characters/${nextCharacter.slug}/`)}
+        data-random-character
+        data-routes={JSON.stringify(randomRoutes)}
+      >
+        <span>Random</span>
+        <strong aria-hidden="true">↝</strong>
+      </a>
+      <a href={withBase(`/characters/${nextCharacter.slug}/`)}>
+        <span>Next</span>
+        <strong lang="zh-Hans">{nextCharacter.character}</strong>
+      </a>
+    </nav>
   </main>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll("[data-random-character]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!(link instanceof HTMLElement)) return;
+      const routes = JSON.parse(link.dataset.routes ?? "[]");
+      if (routes.length < 1) return;
+      event.preventDefault();
+      window.location.assign(routes[Math.floor(Math.random() * routes.length)]);
+    });
+  });
+</script>

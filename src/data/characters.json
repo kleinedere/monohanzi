@@ -7,81 +7,390 @@
     "pinyinDisplay": "jiā",
     "coreMeaning": "home; family",
     "shortGloss": "A home, household, or family.",
-    "explanation": "家 combines a roof-like 宀 with a 豕-like lower form, traditionally connected with a pig inside a dwelling. For a modern learner, the clearest reading is visual and semantic: a house-shaped top over a domestic lower form.",
+    "explanation": "家 places the roof-like 宀 over a 豕-like lower form. The older analysis connects the lower form with a pig in a dwelling; for modern study, keep that history separate from the everyday meanings ‘home’ and ‘family’.",
     "radical": "宀",
     "strokeCount": 10,
-    "frequencyBand": "common",
+    "frequencyBand": "very common",
     "glyph": {
       "sourcePath": "src/assets/glyphs/jia.svg",
-      "viewBox": "0 0 1024 1024",
+      "viewBox": "0 0 109 109",
       "title": "家",
-      "description": "The character 家 is shown as two inspectable component groups: 宀 above and a 豕-like form below."
+      "description": "The character 家 is shown as a roof component above a compressed pig-like historical form.",
+      "source": {
+        "repository": "Connum/HanziVG",
+        "path": "hanzi/05bb6.svg",
+        "revision": "55ecef6a881d5120cd261587d668e1b6af843ec2",
+        "license": "CC BY-SA 3.0",
+        "modified": true
+      },
+      "review": {
+        "technical": "approved",
+        "visual": "approved",
+        "editorial": "approved"
+      }
     },
     "components": [
       {
         "id": "roof",
         "form": "宀",
-        "role": "semantic component",
+        "roles": ["semantic", "radical"],
         "meaning": "roof / house",
-        "note": "This top component contributes the idea of a dwelling or covered place.",
-        "confidence": "high"
+        "note": "This top component places the character in the world of dwellings and covered places.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-jia"]
       },
       {
         "id": "pig",
         "form": "豕",
-        "role": "historical / visual component",
+        "roles": ["historical", "visual"],
         "meaning": "pig",
-        "note": "The lower form is traditionally explained through 豕. Treat it as a useful historical and visual clue, not as a standalone modern meaning inside every use of 家.",
-        "confidence": "medium"
+        "note": "The lower form is traditionally analyzed as 豕. It is a historical clue, not an active pig meaning in every modern use of 家.",
+        "confidence": "medium",
+        "sourceRefs": ["wiktionary-jia"]
       }
     ],
     "examples": [
-      {
-        "word": "家人",
-        "pinyin": "jiā rén",
-        "gloss": "family member; family"
-      },
-      {
-        "word": "回家",
-        "pinyin": "huí jiā",
-        "gloss": "to go home"
-      },
-      {
-        "word": "国家",
-        "pinyin": "guó jiā",
-        "gloss": "country; nation"
-      },
-      {
-        "word": "家里",
-        "pinyin": "jiā lǐ",
-        "gloss": "at home; in the home"
-      }
+      { "word": "家人", "pinyin": "jiā rén", "gloss": "family; family member" },
+      { "word": "回家", "pinyin": "huí jiā", "gloss": "to go home" },
+      { "word": "国家", "pinyin": "guó jiā", "gloss": "country; nation" },
+      { "word": "家里", "pinyin": "jiā lǐ", "gloss": "at home" }
     ],
     "related": [
       {
-        "character": "安",
-        "label": "roof family",
-        "note": "Shares the roof-like 宀 component."
+        "character": "问",
+        "label": "enclosing structure",
+        "note": "Compare another character whose outer form creates a strong visual frame.",
+        "href": "/characters/wen/"
       },
       {
-        "character": "字",
-        "label": "roof family",
-        "note": "Another common character built under 宀."
+        "character": "东",
+        "label": "historical caution",
+        "note": "A second case where the visible modern form needs a careful historical label.",
+        "href": "/characters/dong/"
+      }
+    ],
+    "sources": [
+      {
+        "id": "wiktionary-jia",
+        "title": "Wiktionary: 家",
+        "href": "https://en.wiktionary.org/wiki/家",
+        "note": "Reference for modern senses and the traditional component analysis; historical claims should be cross-checked before corpus-scale publication."
+      }
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "ming",
+    "character": "明",
+    "traditional": "明",
+    "pinyin": "ming2",
+    "pinyinDisplay": "míng",
+    "coreMeaning": "bright; clear",
+    "shortGloss": "Brightness, light, or clarity.",
+    "explanation": "明 brings 日 and 月 together in a memorable image of light. That visible pairing is useful for learning, while the exact historical development is more complicated than the simple ‘sun plus moon’ story.",
+    "radical": "日",
+    "strokeCount": 8,
+    "frequencyBand": "very common",
+    "glyph": {
+      "sourcePath": "src/assets/glyphs/ming.svg",
+      "viewBox": "0 0 109 109",
+      "title": "明",
+      "description": "The character 明 is divided into a sun component on the left and a moon component on the right.",
+      "source": {
+        "repository": "Connum/HanziVG",
+        "path": "hanzi/0660e.svg",
+        "revision": "55ecef6a881d5120cd261587d668e1b6af843ec2",
+        "license": "CC BY-SA 3.0",
+        "modified": true
+      },
+      "review": {
+        "technical": "approved",
+        "visual": "approved",
+        "editorial": "approved"
+      }
+    },
+    "components": [
+      {
+        "id": "sun",
+        "form": "日",
+        "roles": ["semantic", "radical"],
+        "meaning": "sun / day",
+        "note": "The left side supplies a direct image of light and is also the dictionary radical.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-ming"]
       },
       {
-        "character": "室",
-        "label": "roof family",
-        "note": "A room or chamber under the same visual top."
+        "id": "moon",
+        "form": "月",
+        "roles": ["semantic"],
+        "meaning": "moon / month",
+        "note": "The right side reinforces the learner-facing image of illumination.",
+        "confidence": "medium",
+        "sourceRefs": ["wiktionary-ming"]
+      }
+    ],
+    "examples": [
+      { "word": "明天", "pinyin": "míng tiān", "gloss": "tomorrow" },
+      { "word": "明白", "pinyin": "míng bai", "gloss": "to understand; clear" },
+      { "word": "说明", "pinyin": "shuō míng", "gloss": "to explain" }
+    ],
+    "related": [
+      {
+        "character": "妈",
+        "label": "compare roles",
+        "note": "Move from two meaning-related parts to a semantic–phonetic character.",
+        "href": "/characters/ma/"
       },
       {
-        "character": "豕",
-        "label": "component",
-        "note": "The lower component used in the traditional explanation."
+        "character": "东",
+        "label": "compare certainty",
+        "note": "Compare this familiar mnemonic with a deliberately visual-only split.",
+        "href": "/characters/dong/"
+      }
+    ],
+    "sources": [
+      {
+        "id": "wiktionary-ming",
+        "title": "Wiktionary: 明",
+        "href": "https://en.wiktionary.org/wiki/明",
+        "note": "Reference for meanings and a summary of competing historical analyses."
+      }
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "ma",
+    "character": "妈",
+    "traditional": "媽",
+    "pinyin": "ma1",
+    "pinyinDisplay": "mā",
+    "coreMeaning": "mother; mom",
+    "shortGloss": "An everyday word for one’s mother.",
+    "explanation": "妈 is a semantic–phonetic character. 女 points toward its meaning, while 马 (mǎ) offers the pronunciation family, even though its tone differs from mā.",
+    "radical": "女",
+    "strokeCount": 6,
+    "frequencyBand": "very common",
+    "glyph": {
+      "sourcePath": "src/assets/glyphs/ma.svg",
+      "viewBox": "0 0 109 109",
+      "title": "妈",
+      "description": "The simplified character 妈 is divided into woman on the left and horse on the right.",
+      "source": {
+        "repository": "Connum/HanziVG",
+        "path": "hanzi/05988.svg",
+        "revision": "55ecef6a881d5120cd261587d668e1b6af843ec2",
+        "license": "CC BY-SA 3.0",
+        "modified": true
+      },
+      "review": {
+        "technical": "approved",
+        "visual": "approved",
+        "editorial": "approved"
+      }
+    },
+    "components": [
+      {
+        "id": "woman",
+        "form": "女",
+        "roles": ["semantic", "radical"],
+        "meaning": "woman / female",
+        "note": "The left component places the word in a female family relationship.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-ma"]
       },
       {
-        "character": "宀",
-        "label": "component",
-        "note": "The roof component that often points toward houses or covered spaces."
+        "id": "horse",
+        "form": "马",
+        "roles": ["phonetic"],
+        "meaning": "horse; sound clue mǎ",
+        "note": "Here 马 primarily suggests sound rather than contributing the meaning ‘horse.’",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-ma"]
+      }
+    ],
+    "examples": [
+      { "word": "妈妈", "pinyin": "māma", "gloss": "mom; mother" },
+      { "word": "爸妈", "pinyin": "bà mā", "gloss": "parents; mom and dad" },
+      { "word": "妈妈们", "pinyin": "māma men", "gloss": "mothers" }
+    ],
+    "related": [
+      {
+        "character": "明",
+        "label": "semantic contrast",
+        "note": "Compare a page where both visible parts support a light mnemonic.",
+        "href": "/characters/ming/"
+      },
+      {
+        "character": "问",
+        "label": "phonetic contrast",
+        "note": "问 also combines a meaning-bearing part with a sound clue.",
+        "href": "/characters/wen/"
+      }
+    ],
+    "sources": [
+      {
+        "id": "wiktionary-ma",
+        "title": "Wiktionary: 媽 / 妈",
+        "href": "https://en.wiktionary.org/wiki/媽",
+        "note": "Reference for the semantic–phonetic analysis and traditional form."
+      }
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "wen",
+    "character": "问",
+    "traditional": "問",
+    "pinyin": "wen4",
+    "pinyinDisplay": "wèn",
+    "coreMeaning": "ask; inquire",
+    "shortGloss": "To ask, inquire, or question.",
+    "explanation": "问 places 口, the mouth, inside 门. The mouth points to speaking and asking; 门 belongs to the sound family and creates the character’s enclosing visual structure.",
+    "radical": "门",
+    "strokeCount": 6,
+    "frequencyBand": "very common",
+    "glyph": {
+      "sourcePath": "src/assets/glyphs/wen.svg",
+      "viewBox": "0 0 109 109",
+      "title": "问",
+      "description": "The simplified character 问 is shown as a mouth enclosed by a door component.",
+      "source": {
+        "repository": "Connum/HanziVG",
+        "path": "hanzi/095ee.svg",
+        "revision": "55ecef6a881d5120cd261587d668e1b6af843ec2",
+        "license": "CC BY-SA 3.0",
+        "modified": true
+      },
+      "review": {
+        "technical": "approved",
+        "visual": "approved",
+        "editorial": "approved"
+      }
+    },
+    "components": [
+      {
+        "id": "door",
+        "form": "门",
+        "roles": ["phonetic", "radical", "visual"],
+        "meaning": "door; sound frame",
+        "note": "The outer form encloses the mouth and belongs to the character’s pronunciation history.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-wen"]
+      },
+      {
+        "id": "mouth",
+        "form": "口",
+        "roles": ["semantic"],
+        "meaning": "mouth / speech",
+        "note": "The inner mouth contributes the idea of speech and asking.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-wen"]
+      }
+    ],
+    "examples": [
+      { "word": "问题", "pinyin": "wèn tí", "gloss": "question; problem" },
+      { "word": "请问", "pinyin": "qǐng wèn", "gloss": "may I ask…" },
+      { "word": "问路", "pinyin": "wèn lù", "gloss": "to ask the way" }
+    ],
+    "related": [
+      {
+        "character": "妈",
+        "label": "sound and meaning",
+        "note": "Another common semantic–phonetic character.",
+        "href": "/characters/ma/"
+      },
+      {
+        "character": "家",
+        "label": "top and enclosure",
+        "note": "Compare a roof component with a fully enclosing outer form.",
+        "href": "/characters/jia/"
+      }
+    ],
+    "sources": [
+      {
+        "id": "wiktionary-wen",
+        "title": "Wiktionary: 問 / 问",
+        "href": "https://en.wiktionary.org/wiki/問",
+        "note": "Reference for the semantic–phonetic analysis and simplified form."
+      }
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "dong",
+    "character": "东",
+    "traditional": "東",
+    "pinyin": "dong1",
+    "pinyinDisplay": "dōng",
+    "coreMeaning": "east",
+    "shortGloss": "The direction east.",
+    "explanation": "东 is the simplified form of 東 and comes through cursive abbreviation. Its modern visible pieces are not a dependable meaning-plus-sound decomposition, so this page uses an explicitly visual split rather than inventing an etymology.",
+    "radical": "一",
+    "strokeCount": 5,
+    "frequencyBand": "very common",
+    "glyph": {
+      "sourcePath": "src/assets/glyphs/dong.svg",
+      "viewBox": "0 0 109 109",
+      "title": "东",
+      "description": "The HanziVG glyph for 东 is divided into an upper frame and a 小-like lower group for practical inspection.",
+      "source": {
+        "repository": "Connum/HanziVG",
+        "path": "hanzi/04e1c.svg",
+        "revision": "55ecef6a881d5120cd261587d668e1b6af843ec2",
+        "license": "CC BY-SA 3.0",
+        "modified": true
+      },
+      "review": {
+        "technical": "approved",
+        "visual": "approved",
+        "editorial": "approved"
+      }
+    },
+    "components": [
+      {
+        "id": "frame",
+        "form": "一乚",
+        "roles": ["visual", "uncertain"],
+        "meaning": "central frame",
+        "note": "This group is only a convenient visible region. Do not read it as an independent semantic component.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-dong"]
+      },
+      {
+        "id": "small",
+        "form": "小",
+        "roles": ["visual", "uncertain"],
+        "meaning": "small-form strokes",
+        "note": "HanziVG groups these three strokes as 小. Here that remains a visual grouping, not a claim that ‘small’ supplies the meaning of east.",
+        "confidence": "high",
+        "sourceRefs": ["wiktionary-dong"]
+      }
+    ],
+    "examples": [
+      { "word": "东西", "pinyin": "dōng xi", "gloss": "thing; object" },
+      { "word": "东方", "pinyin": "dōng fāng", "gloss": "the East; eastern" },
+      { "word": "东边", "pinyin": "dōng bian", "gloss": "east side" }
+    ],
+    "related": [
+      {
+        "character": "明",
+        "label": "clearer mnemonic",
+        "note": "Compare a familiar component story with this deliberately cautious split.",
+        "href": "/characters/ming/"
+      },
+      {
+        "character": "家",
+        "label": "historical reading",
+        "note": "Another character where the visible form and historical account need distinction.",
+        "href": "/characters/jia/"
+      }
+    ],
+    "sources": [
+      {
+        "id": "wiktionary-dong",
+        "title": "Wiktionary: 東 / 东",
+        "href": "https://en.wiktionary.org/wiki/東",
+        "note": "Reference for the traditional form and cursive origin of the simplification."
       }
     ],
     "status": "published"

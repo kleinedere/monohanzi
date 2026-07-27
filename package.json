@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "PUBLIC_BASE_PATH=/ astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "build:local": "PUBLIC_BASE_PATH=/ astro build",
+    "preview": "PUBLIC_BASE_PATH=/ astro preview",
     "validate:glyphs": "node scripts/validate-glyphs.mjs",
     "test": "npm run validate:glyphs && npm run build"
   },

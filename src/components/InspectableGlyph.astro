@@ -7,13 +7,11 @@ interface Props {
 }
 
 const { character, svg } = Astro.props;
-const defaultComponentId = character.components[0]?.id ?? "";
 ---
 
 <section
   class="inspectable-glyph"
   data-inspectable-glyph
-  data-default-component={defaultComponentId}
   aria-label={`Inspectable glyph for ${character.character}`}
 >
   <div class="glyph-stage" set:html={svg} />
@@ -21,17 +19,17 @@ const defaultComponentId = character.components[0]?.id ?? "";
   <div class="component-dock" aria-label={`${character.character} components`}>
     <div class="component-button-list" role="list">
       {
-        character.components.map((component, index) => (
+        character.components.map((component) => (
           <button
-            class:list={["component-button", { "is-selected": index === 0 }]}
+            class="component-button"
             type="button"
             data-component-button={component.id}
-            aria-pressed={index === 0 ? "true" : "false"}
+            aria-pressed="false"
           >
             <span class="component-form" lang="zh-Hans">{component.form}</span>
             <span>
               <span class="component-name">{component.meaning}</span>
-              <span class="component-role">{component.role}</span>
+              <span class="component-role">{component.roles.join(" · ")}</span>
             </span>
           </button>
         ))
@@ -39,17 +37,17 @@ const defaultComponentId = character.components[0]?.id ?? "";
     </div>
 
     <div class="component-detail-stack">
-      <article class="component-empty" data-component-empty hidden>
+      <article class="component-empty" data-component-empty>
         <p class="detail-kicker">Structure</p>
-        <h2>{character.character}</h2>
+        <h2>Explore its parts</h2>
         <p>{character.shortGloss}</p>
       </article>
       {
-        character.components.map((component, index) => (
+        character.components.map((component) => (
           <article
             class="component-detail"
             data-component-detail={component.id}
-            hidden={index !== 0}
+            hidden
           >
             <p class="detail-kicker">Component</p>
             <h2>
@@ -60,7 +58,7 @@ const defaultComponentId = character.components[0]?.id ?? "";
             <dl>
               <div>
                 <dt>Role</dt>
-                <dd>{component.role}</dd>
+                <dd>{component.roles.join(", ")}</dd>
               </div>
               <div>
                 <dt>Confidence</dt>
@@ -92,6 +90,7 @@ const defaultComponentId = character.components[0]?.id ?? "";
       ...groups.map((group) => group.getAttribute("data-component-id")),
       ...buttons.map((button) => button.getAttribute("data-component-button"))
     ]);
+    let pinnedId = null;
 
     function setSelected(id) {
       if (!id || !ids.has(id)) {
@@ -145,19 +144,34 @@ const defaultComponentId = character.components[0]?.id ?? "";
       }
     }
 
+    function restorePinned() {
+      if (pinnedId) {
+        setSelected(pinnedId);
+      } else {
+        clearSelected();
+      }
+    }
+
+    function togglePinned(id) {
+      pinnedId = pinnedId === id ? null : id;
+      restorePinned();
+    }
+
     groups.forEach((group) => {
       const id = group.getAttribute("data-component-id");
 
       group.addEventListener("pointerenter", () => setSelected(id));
+      group.addEventListener("pointerleave", restorePinned);
       group.addEventListener("focus", () => setSelected(id));
+      group.addEventListener("blur", restorePinned);
       group.addEventListener("click", (event) => {
         event.stopPropagation();
-        setSelected(id);
+        togglePinned(id);
       });
       group.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          setSelected(id);
+          togglePinned(id);
         }
       });
     });
@@ -166,10 +180,12 @@ const defaultComponentId = character.components[0]?.id ?? "";
       const id = button.getAttribute("data-component-button");
 
       button.addEventListener("pointerenter", () => setSelected(id));
+      button.addEventListener("pointerleave", restorePinned);
       button.addEventListener("focus", () => setSelected(id));
+      button.addEventListener("blur", restorePinned);
       button.addEventListener("click", (event) => {
         event.stopPropagation();
-        setSelected(id);
+        togglePinned(id);
       });
     });
 
@@ -181,6 +197,7 @@ const defaultComponentId = character.components[0]?.id ?? "";
       }
 
       if (!target.closest(selectableSelector)) {
+        pinnedId = null;
         clearSelected();
       }
     });
@@ -189,17 +206,19 @@ const defaultComponentId = character.components[0]?.id ?? "";
       const target = event.target;
 
       if (target instanceof Element && !root.contains(target)) {
+        pinnedId = null;
         clearSelected();
       }
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
+        pinnedId = null;
         clearSelected();
       }
     });
 
-    setSelected(root.dataset.defaultComponent);
+    clearSelected();
   }
 
   function initAllInspectableGlyphs() {

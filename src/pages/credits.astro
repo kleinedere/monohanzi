@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { publishedCharacters } from "../data/characters";
+import { withBase } from "../utils/paths";
+---
+
+<BaseLayout
+  title="Credits & Licenses | Monohanzi"
+  description="Asset provenance and license notes for Monohanzi."
+>
+  <main class="text-page">
+    <header class="site-header">
+      <a class="brand" href={withBase("/")}>Monohanzi</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href={withBase("/")}>Explore</a>
+        <a href={withBase("/method/")}>Method</a>
+      </nav>
+    </header>
+
+    <article class="editorial-page">
+      <p class="eyebrow">Credits &amp; licenses</p>
+      <h1>Where the character assets come from.</h1>
+      <p class="lede">
+        Provenance is stored with each glyph so source and license obligations
+        remain visible as the collection grows.
+      </p>
+
+      <section>
+        <h2>Current prototype assets</h2>
+        <ul class="asset-list">
+          {
+            publishedCharacters.map((character) => (
+              <li>
+                <span lang="zh-Hans">{character.character}</span>
+                <strong>{character.glyph.source.repository}</strong>
+                <span>{character.glyph.source.path}</span>
+                <span>{character.glyph.source.license}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section>
+        <h2>HanziVG</h2>
+        <p>
+          <a href="https://github.com/Connum/hanzivg">Connum/HanziVG</a> is the
+          source of all five current glyphs. Their original stroke paths are
+          unchanged; component IDs and accessibility markup are adapted for this
+          interface. The assets are licensed under CC BY-SA 3.0, and each entry
+          above records its exact source path and pinned revision.
+        </p>
+      </section>
+
+      <section>
+        <h2>Application code</h2>
+        <p>
+          Monohanzi application code is provided under the repository’s MIT
+          License. The glyph assets are separately covered by the attribution
+          and ShareAlike terms described above.
+        </p>
+      </section>
+    </article>
+  </main>
+</BaseLayout>

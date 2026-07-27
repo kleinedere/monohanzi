@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getCharacterBySlug } from "../data/characters";
+import { publishedCharacters } from "../data/characters";
 import { withBase } from "../utils/paths";
 
-const firstCharacter = getCharacterBySlug("jia");
+const randomRoutes = publishedCharacters.map(({ slug }) =>
+  withBase(`/characters/${slug}/`)
+);
 ---
 
 <BaseLayout
@@ -13,23 +15,139 @@ const firstCharacter = getCharacterBySlug("jia");
   <main class="home-page">
     <header class="site-header">
       <a class="brand" href={withBase("/")}>Monohanzi</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#characters">Explore</a>
+        <a href={withBase("/method/")}>Method</a>
+      </nav>
     </header>
 
     <section class="home-hero" aria-labelledby="home-title">
       <p class="eyebrow">Character study</p>
-      <h1 id="home-title">Monohanzi</h1>
+      <h1 id="home-title">Look closer.</h1>
       <p>
-        A quiet page for looking closely at one Chinese character, its visible
-        structure, and a few useful words.
+        Learn one Chinese character at a time by touching its structure,
+        reading a few useful words, and following the next connection.
       </p>
-      {
-        firstCharacter && (
-          <a class="primary-link" href={withBase(`/characters/${firstCharacter.slug}/`)}>
-            <span lang="zh-Hans">{firstCharacter.character}</span>
-            <span>Start with {firstCharacter.coreMeaning}</span>
-          </a>
-        )
-      }
+      <div class="hero-actions">
+        <a class="primary-link" href={withBase("/characters/jia/")}>
+          <span lang="zh-Hans">家</span>
+          <span>Start with home</span>
+        </a>
+        <a
+          class="secondary-link"
+          href={withBase("/characters/ming/")}
+          data-random-character
+          data-routes={JSON.stringify(randomRoutes)}
+        >
+          Surprise me
+        </a>
+      </div>
+    </section>
+
+    <section class="character-browser" id="characters" aria-labelledby="browse-title">
+      <div class="browser-heading">
+        <div>
+          <p class="eyebrow">Phase 0 collection</p>
+          <h2 id="browse-title">Five ways to see structure</h2>
+        </div>
+        <label class="search-field">
+          <span>Search this collection</span>
+          <input
+            type="search"
+            placeholder="Character, pinyin, meaning…"
+            data-character-search
+            autocomplete="off"
+          />
+        </label>
+      </div>
+
+      <p class="search-status" data-search-status aria-live="polite">
+        Showing {publishedCharacters.length} characters
+      </p>
+
+      <ul class="character-grid" data-character-grid>
+        {
+          publishedCharacters.map((character) => {
+            const searchText = [
+              character.character,
+              character.traditional,
+              character.pinyin,
+              character.pinyinDisplay,
+              character.coreMeaning,
+              character.shortGloss,
+              ...character.components.flatMap((component) => [
+                component.form,
+                component.meaning,
+                ...component.roles
+              ]),
+              ...character.examples.flatMap((example) => [
+                example.word,
+                example.pinyin,
+                example.gloss
+              ])
+            ].join(" ");
+
+            return (
+              <li data-character-card data-search={searchText}>
+                <a href={withBase(`/characters/${character.slug}/`)}>
+                  <span class="card-character" lang="zh-Hans">{character.character}</span>
+                  <span class="card-reading">{character.pinyinDisplay}</span>
+                  <strong>{character.coreMeaning}</strong>
+                  <span class="card-gloss">{character.shortGloss}</span>
+                  <span class="card-action">Inspect character <span aria-hidden="true">→</span></span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+
+      <p class="empty-results" data-empty-results hidden>
+        No character in this five-page collection matches that search yet.
+      </p>
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  const normalize = (value) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLocaleLowerCase()
+      .trim();
+
+  const search = document.querySelector("[data-character-search]");
+  const cards = Array.from(document.querySelectorAll("[data-character-card]"));
+  const status = document.querySelector("[data-search-status]");
+  const empty = document.querySelector("[data-empty-results]");
+
+  if (search instanceof HTMLInputElement) {
+    search.addEventListener("input", () => {
+      const query = normalize(search.value);
+      let visible = 0;
+
+      cards.forEach((card) => {
+        if (!(card instanceof HTMLElement)) return;
+        const matches = normalize(card.dataset.search ?? "").includes(query);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      if (status) {
+        status.textContent = `Showing ${visible} ${visible === 1 ? "character" : "characters"}`;
+      }
+      if (empty instanceof HTMLElement) empty.hidden = visible !== 0;
+    });
+  }
+
+  document.querySelectorAll("[data-random-character]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!(link instanceof HTMLElement)) return;
+      const routes = JSON.parse(link.dataset.routes ?? "[]");
+      if (routes.length < 1) return;
+      event.preventDefault();
+      window.location.assign(routes[Math.floor(Math.random() * routes.length)]);
+    });
+  });
+</script>
