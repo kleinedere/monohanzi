@@ -1,703 +1,273 @@
 # PRD — Monohanzi
 
-## 1. Product Summary
+## 1. Product Definition
 
-**Working title:** Monohanzi
+Monohanzi is a static, visual Chinese character learning site. Each Hanzi is
+presented as a central object whose meaning, visible structure, examples, and
+relationships can be explored without dictionary clutter.
 
-**Product type:** A static, web-based Chinese character learning experience.
+The primary audience is the curious beginner who wants characters to stop
+feeling arbitrary. Intermediate learners are a secondary audience: they may
+already use dictionaries, but want a calmer way to review structure and make
+connections.
 
-**One-line concept:** A quiet, visual character-learning site where each Hanzi is presented as a central object whose meaning, structure, examples, and related characters can be explored without dictionary clutter.
-
-**Product thesis:** Chinese characters become easier to learn when the learner can see the character as a structured object rather than as an arbitrary glyph. Monohanzi should make each character feel inspectable, memorable, and connected to a wider system.
-
-**Design thesis:** The interface should feel closer to a museum object page or editorial artifact page than to a dictionary, flashcard app, or dense reference tool.
-
----
-
-## 2. Problem
-
-Chinese learners often encounter one of two extremes:
-
-1. **Reference tools with too much density**  
-   Existing character tools often expose definitions, decomposition, etymology, examples, variants, and metadata all at once. They are useful, but cognitively busy.
-
-2. **Learning apps with too little structural clarity**  
-   Many apps teach recognition and recall, but do not make the internal structure of a character visually obvious.
-
-The missing experience is a calm, high-signal page that answers:
-
-- What does this character basically mean?
-- What are its parts?
-- Which part carries meaning?
-- Which part carries sound, if any?
-- Where does it appear in real words?
-- What should I click next?
-
----
-
-## 3. Product Goal
-
-Build a minimal, beautiful, static website for learning Chinese characters one at a time.
-
-A successful character page lets the user:
+A successful character page lets a learner:
 
 1. notice the glyph,
-2. understand the core meaning,
-3. inspect the character’s components directly on the glyph,
-4. read 2–4 useful example words,
-5. follow one meaningful link to another character, component, or word.
+2. understand its core meaning,
+3. inspect meaningful components directly on the glyph,
+4. read 2–4 useful example words, and
+5. continue to a related published character or collection.
 
-The product should feel calm, precise, and exploratory.
+The interface should feel closer to a museum object page or editorial artifact
+study than to a dictionary, dashboard, or flashcard app.
 
----
+### Product principles
 
-## 4. MVP Scope
+1. **The glyph is the hero.** Use one dominant character, generous whitespace,
+   restrained color, and minimal interface chrome.
+2. **Structure is directly inspectable.** Meaningful parts must be selectable on
+   the glyph, not only described in surrounding text.
+3. **Minimal means edited, not empty.** Every page teaches enough to be useful,
+   while strict copy limits prevent dictionary-like density.
+4. **Pedagogy does not override evidence.** Prefer a clear explanation, but
+   distinguish structural role, visual mnemonic, and historical origin. Label
+   uncertainty instead of presenting folk etymology as fact.
+5. **Every link leads somewhere useful.** Components, examples, related
+   characters, navigation, and collections should encourage deliberate
+   exploration without dead ends.
 
-### In scope
+## 2. Delivery Scope
 
-- 100–300 curated characters.
-- One static detail page per character.
-- Search by character, pinyin, English gloss, and component.
-- Random character navigation.
-- Curated collections.
-- Cross-links between characters, components, words, semantic families, and phonetic families.
-- Inspectable SVG glyphs with hoverable/focusable components.
-- Static deployment to GitHub Pages.
+### Phase 0 — five-character gate
 
-### Out of scope for MVP
+Before scaling content production, publish five polished character pages that
+collectively exercise:
 
-- Full dictionary coverage.
-- User accounts.
-- Server-side personalization.
-- Heavy gamification.
-- Stroke-writing practice.
-- Exhaustive historical philology.
-- Audio, unless trivial to add later.
+- a primarily semantic decomposition,
+- a semantic–phonetic decomposition,
+- an enclosing component,
+- a compressed or visually mutated component, and
+- an uncertain or disputed decomposition.
 
----
+`家` is the existing first slice and may fill one of these cases after its asset
+and claims pass the same review required of the other four. Phase 0 must confirm
+the HanziVG conversion workflow, content model, validation, desktop hover,
+keyboard focus, mobile tap, reduced-motion behavior, and editorial review.
 
-## 5. Target Users
+### Phase 1 — public MVP
 
-### Primary user: Curious beginner
+The MVP contains exactly 100 published, curated characters and includes:
 
-A learner who wants characters to stop feeling arbitrary.
+- one static detail page and inspectable SVG per character,
+- simplified-character canonical routes,
+- display and search support for known traditional equivalents,
+- local search by character, traditional form, pinyin with or without tone
+  marks, English gloss, component/radical, and example word,
+- random character navigation,
+- previous/next navigation within curated collections,
+- collections for useful themes and component or phonetic families,
+- links between published characters and components,
+- a method page explaining component terminology, evidence, and uncertainty,
+- a public asset credits/license page, and
+- static deployment to GitHub Pages beneath `/monohanzi/`.
 
-Needs:
+The MVP does not include full dictionary coverage, separate traditional glyph
+pages, accounts, personalization, gamification, stroke-writing practice,
+analytics, or exhaustive philology. Favorites, audio, sentence examples, stroke
+overlays, and teaching tools may be considered after the MVP.
 
-- simple meanings,
-- clear visual structure,
-- a small number of useful examples,
-- non-intimidating exploration.
+## 3. Character Page and Interaction Contract
 
-### Secondary user: Intermediate independent learner
+Each page must contain a large SVG glyph, pinyin and tone, core meaning, one
+short gloss, a concise “how to think about it” explanation, component details,
+2–4 example words, related published content, and previous/next/random
+navigation.
 
-A learner who already uses dictionaries but wants a calmer way to review and connect characters.
+The reading order is: see the character, understand the basic meaning, inspect
+its parts, read the explanation, scan examples, and choose one next destination.
+Core page content remains readable without heavy client-side rendering.
 
-Needs:
+### Component terminology and content
 
-- concise structure explanations,
-- semantic and phonetic relationships,
-- useful examples and cross-links,
-- less visual noise than a reference tool.
+Use **component** as the general product term. Use **radical** only for the
+dictionary radical or a sourced, historically recognized radical. Component
+roles use this controlled set:
 
-### Tertiary user: Design-conscious language enthusiast
+- `semantic` — contributes a meaning category,
+- `phonetic` — contributes a pronunciation clue,
+- `radical` — identifies the dictionary radical when that fact is useful,
+- `visual` — a practical visible region without a stronger linguistic claim,
+- `historical` — relevant to an attested earlier analysis or form, and
+- `uncertain` — disputed or insufficiently supported.
 
-A user interested in typography, writing systems, and beautiful learning tools.
+Each component provides its form, learner-facing meaning, one or more controlled
+roles, short note, confidence, source references, and an optional link. Notes
+must not conflate a modern visual
+mnemonic with historical origin. Structural and historical claims require cited
+source notes and human editorial approval.
 
-Needs:
+### Inspectable behavior
 
-- strong visual presentation,
-- careful typography,
-- elegant interaction,
-- meaningful curation.
+Every published character has one SVG in which the complete visible glyph is
+the union of its component groups. All paths share one root coordinate system;
+the UI must not place unrelated overlays over a separately rendered font glyph.
 
----
+Each component supports desktop hover, keyboard focus and activation, mobile
+tap, a visible selected state, an accessible name, and a synchronized detail
+panel. A parallel component button list must expose the same state without
+requiring direct SVG interaction. Tapping outside or pressing Escape clears the
+selection. Labels must not obscure the glyph, and reduced-motion preferences
+must suppress nonessential transitions.
 
-## 6. Product Principles
+Component and related-character links are active only when their destination is
+published. An unpublished relation is rendered as a non-link or omitted; it
+must never create a broken route.
 
-1. **The glyph is the hero**  
-   The character should dominate the page visually.
+## 4. Glyph Source and Editorial Pipeline
 
-2. **Structure should be visible, not merely described**  
-   Users should be able to hover, focus, or tap a component directly on the glyph and see what it is.
+[Connum/HanziVG](https://github.com/Connum/hanzivg) is the default upstream
+source for stroke geometry and initial component grouping. HanziVG metadata is
+evidence, not editorial truth: Chinese form, stroke geometry, group boundaries,
+component roles, and any historical interpretation must be reviewed before an
+asset is publishable.
 
-3. **Minimal means edited, not empty**  
-   Every page needs enough explanation to teach, but no more than necessary.
+For each character:
 
-4. **Pedagogy beats exhaustiveness**  
-   Prefer the explanation that helps a learner understand the character now.
+1. Locate the source SVG by Unicode code point and pin the upstream revision.
+2. Prefer a verified Chinese HanziVG asset; do not silently substitute a
+   Japanese form when the Chinese glyph or stroke convention differs.
+3. Preserve the source paths and shared coordinates while selecting the groups
+   that are pedagogically useful at Monohanzi’s page level.
+4. Normalize the SVG viewBox, stable component IDs, classes, focus behavior,
+   accessible labels, title, and description.
+5. Match SVG component IDs to structured character data and run automated
+   validation.
+6. Review the rendered full glyph and every highlight state, then review
+   component claims, citations, uncertainty labels, and provenance.
+7. Mark the entry `published` only after all technical and editorial checks
+   pass.
 
-5. **Every visible part should be a doorway**  
-   Components, example words, related characters, and families should be navigable.
+If HanziVG is missing, visibly unsuitable, or grouped in a way that cannot
+support the teaching goal, create or correct the SVG manually. `svg_prompt.md`
+is an auxiliary fallback guide, not an authoritative source. Original or
+generated geometry must satisfy exactly the same alignment, accessibility,
+provenance, and review requirements.
 
-6. **Uncertainty should be labeled**  
-   When decomposition or historical explanation is approximate, say so.
+Hard cases may use a practical visual grouping when a clean modern or historical
+split is impossible, but the role must be `visual` or `uncertain` and the note
+must describe the limitation. A passive, unsegmented glyph is not an MVP
+fallback: the character remains a draft.
 
-7. **Static first**  
-   The product should work as a fast, mostly static website with no backend dependency.
+### Licensing and attribution
 
----
+HanziVG is distributed under CC BY-SA 3.0. Imported or adapted glyph assets must
+retain required attribution and be distributed under compatible ShareAlike
+terms. This asset obligation is documented separately from the repository’s MIT
+software license. Confirm compliance before public distribution; this PRD is
+product guidance, not legal advice.
 
-## 7. Core Character Page
+Every derived glyph records its upstream repository, source path, pinned commit
+or release, source license, whether Monohanzi modified it, and review status.
+The deployed site also provides a project-level credits/license page.
 
-Each character page is the central product unit.
+## 5. Content and Publication Contract
 
-### Required page elements
+Character content lives in structured JSON. Simplified characters are canonical;
+`traditional` stores a known equivalent for display and search, without creating
+a separate page in the MVP.
 
-- Large central SVG glyph.
-- Pinyin and tone.
-- Core meaning.
-- One concise gloss sentence.
-- Short “how to think about it” explanation.
-- Inspectable component/radical breakdown.
-- 2–4 example words.
-- Related characters.
-- Previous / next / random navigation.
+The existing character fields remain: slug, character, traditional form,
+pinyin, display pinyin, meaning, gloss, explanation, radical, stroke count,
+frequency band, components, examples, related entries, glyph metadata, and
+editorial status. Replace free-form component `role` with a `roles` array whose
+values come from the controlled role set above. Add a character-level `sources`
+array of stable IDs, titles, URLs or publication references, and short notes;
+components refer to those IDs through `sourceRefs`.
 
-### Recommended hierarchy
-
-1. Character glyph.
-2. Core meaning.
-3. Pinyin and basic metadata.
-4. Component inspection.
-5. Explanation.
-6. Example words.
-7. Related links.
-
-### Reading rhythm
-
-The page should support this sequence:
-
-1. Look at the character.
-2. Read the meaning.
-3. Hover or tap its parts.
-4. Read the short explanation.
-5. Scan examples.
-6. Click one next thing.
-
----
-
-## 8. Inspectable Glyph Requirement
-
-This is a core MVP requirement.
-
-The character glyph should not be a passive font-rendered character only. It should be an inspectable SVG object whose meaningful sub-components can be highlighted.
-
-For example, on a page for 明:
-
-- hovering 日 highlights the 日 component,
-- hovering 月 highlights the 月 component,
-- the tooltip or side label explains the component,
-- the component can link to its own character page,
-- keyboard focus and mobile tap provide the same information.
-
-### Terminology
-
-Use **component** as the general product term.
-
-Use **radical** only when referring to the dictionary radical or a historically recognized radical. Many useful visual parts are not technically the radical, so the UI should avoid implying that every sub-component is a radical.
-
-Possible component roles:
-
-- semantic component,
-- phonetic component,
-- dictionary radical,
-- visual component,
-- historical residue,
-- uncertain or disputed component.
-
-### Interaction requirements
-
-Each inspectable component should support:
-
-- hover on desktop,
-- focus by keyboard,
-- tap/select on mobile,
-- visible highlight state,
-- short label,
-- short tooltip or side-panel explanation,
-- optional link to a character/component page,
-- accessible name for screen readers.
-
-### Component tooltip content
-
-Each tooltip should answer, when known:
-
-- component character or form,
-- meaning,
-- role in this character,
-- pronunciation clue, if relevant,
-- confidence level if uncertain.
-
-Example:
+Glyph metadata additionally records:
 
 ```text
-日
-sun / day
-Role: semantic component
-In 明, it contributes to the idea of brightness.
+source: { repository, path, revision, license, modified }
+review: { technical, visual, editorial }
 ```
 
-### Mobile behavior
-
-Mobile should not rely on hover. Tapping a component selects it and shows the explanation below or beside the glyph. Tapping outside clears the selection.
-
-### Accessibility behavior
-
-A parallel component list should mirror the SVG interaction. Users should be able to tab through the component list and produce the same highlight state on the glyph.
-
----
-
-## 9. SVG Alignment Requirement
-
-The most important technical requirement for inspectable glyphs is alignment.
-
-The highlighted sub-components must visually align with the full displayed character. The user should never feel that the component overlay is slightly off, scaled differently, or drawn from another font.
-
-### Preferred SVG model
-
-Use **one SVG per character** with all components drawn in the same coordinate system.
-
-Do not compose the visible glyph from separately positioned external component SVGs unless there is a reliable generation process that guarantees shared coordinates.
-
-Preferred structure:
-
-```xml
-<svg viewBox="0 0 1024 1024" aria-labelledby="title desc">
-  <title>明</title>
-  <desc>Character composed of 日 and 月.</desc>
-
-  <g id="component-sun" data-component="日" data-role="semantic">
-    <!-- paths for 日 inside 明 -->
-  </g>
-
-  <g id="component-moon" data-component="月" data-role="semantic">
-    <!-- paths for 月 inside 明 -->
-  </g>
-</svg>
-```
-
-The full glyph is therefore the union of its component groups.
-
-### Alignment rules
-
-- All component paths must share the root SVG `viewBox`.
-- Component paths must come from the same glyph outline, font, or source drawing.
-- The rendered character must not be a separate font glyph underneath unrelated overlay paths.
-- If a base outline is used, the component highlight layer must be generated from the same outline source.
-- SVGs should use stable IDs that match the character data model.
-- Component hit areas may be slightly enlarged for usability, but the visual highlight must remain faithful to the glyph.
-
-### Generation strategy
-
-Generating these SVGs is feasible, but it should be treated as a content pipeline, not as one-off artwork.
-
-Possible pipeline:
-
-1. Choose a canonical glyph source and font/source style.
-2. Generate or import the full SVG outline for each character.
-3. Segment the outline into component groups.
-4. Assign each group a component ID and role.
-5. Validate that all groups align within the same `viewBox`.
-6. Manually review and correct important characters.
-7. Store generated SVGs as static assets.
-
-### Validation requirements
-
-The build should fail or warn if:
-
-- a component ID in the SVG does not exist in the character data file,
-- a component in the data file has no matching SVG group,
-- the SVG has inconsistent viewBox dimensions,
-- a component group sits outside the viewBox,
-- required accessibility labels are missing.
-
-For higher-quality validation, compare the union of component paths against the full glyph outline. Small tolerances are acceptable, but large differences indicate a broken decomposition.
-
-### Handling hard cases
-
-Some characters do not split cleanly into modern visual components. Some parts overlap, mutate, compress, or preserve historical forms that are not obvious to beginners.
-
-In those cases:
-
-- prefer honest approximation over false precision,
-- mark the component as `partial`, `visual`, or `uncertain`,
-- avoid over-explaining dubious etymology,
-- allow the SVG to highlight a practical visual region rather than a perfect historical component.
-
----
-
-## 10. Content Model
-
-Each character entry should be stored as structured data.
-
-Recommended shape:
-
-```yaml
-character: 明
-traditional: 明
-pinyin: ming2
-coreMeaning: bright
-shortGloss: Brightness, light, or clarity.
-explanation: 明 combines sun and moon imagery to suggest brightness and clarity.
-radical: 日
-strokeCount: 8
-frequencyBand: common
-components:
-  - id: sun
-    form: 日
-    role: semantic
-    meaning: sun / day
-    note: Contributes the idea of light.
-    href: /characters/日/
-    confidence: high
-  - id: moon
-    form: 月
-    role: semantic
-    meaning: moon / month
-    note: Reinforces the light/brightness idea.
-    href: /characters/月/
-    confidence: high
-examples:
-  - word: 明天
-    pinyin: ming2 tian1
-    gloss: tomorrow
-  - word: 明白
-    pinyin: ming2 bai5
-    gloss: to understand; clear
-related:
-  semanticFamily: [亮, 光, 晴]
-  componentFamily: [日, 月]
-  confusable: []
-status: published
-```
-
-### Required fields for MVP
-
-- character,
-- pinyin,
-- core meaning,
-- short gloss,
-- explanation,
-- components,
-- examples,
-- related links,
-- SVG asset path,
-- editorial status.
-
-### Optional fields
-
-- traditional variant,
-- alternative readings,
-- frequency band,
-- HSK band,
-- stroke count,
-- historical note,
-- confidence label,
-- source notes.
-
----
-
-## 11. Browse and Navigation
-
-### Required browse modes
-
-- Search.
-- Random character.
-- Curated collections.
-- Previous / next within a collection.
-
-### Useful collections for launch
-
-- First 50 characters.
-- First 100 everyday characters.
-- Nature.
-- Body.
-- Time.
-- Motion.
-- People and family.
-- Components that unlock many later characters.
-- Common phonetic families.
-- Easily confused pairs.
-
-### Search requirements
-
-Search should support:
-
-- exact character,
-- simplified/traditional form,
-- pinyin with and without tone marks,
-- English meaning,
-- component/radical,
-- example word.
-
-Search should be local and static for MVP, using a prebuilt JSON index.
-
----
-
-## 12. Static Technical Architecture
-
-The site should be deployable as static files on GitHub Pages.
-
-### Preferred architecture
-
-- Static site generator or static build output.
-- Character content stored as JSON, YAML, or Markdown with frontmatter.
-- Generated HTML pages for every character and collection.
-- Static SVG assets for glyphs.
-- Static JSON search index.
-- No backend required for core experience.
-
-### Suitable implementation options
-
-Any of the following are acceptable:
-
-- Astro with static output,
-- Vite with pre-rendered routes,
-- Eleventy,
-- plain static HTML generated by scripts,
-- another static-site generator with predictable output.
-
-Avoid introducing a server-rendered framework unless it exports clean static files.
-
-### Deployment requirements
-
-- Build output should deploy to GitHub Pages.
-- The site must work under a project subpath, e.g. `/monohanzi/`, unless using a custom domain.
-- All internal links and asset paths must respect the configured base path.
-- The repository should include a simple build command and deployment workflow.
-- No private or licensed source data should be committed if the repo is public.
-
-### Data and asset pipeline
-
-Recommended directories:
-
-```text
-/content/characters/*.yaml
-/content/collections/*.yaml
-/assets/glyphs/*.svg
-/scripts/generate-search-index.ts
-/scripts/validate-glyphs.ts
-/src/
-/dist/
-```
-
-### Client-side JavaScript
-
-Use JavaScript for:
-
-- SVG component hover/focus/tap states,
-- local search,
-- random navigation,
-- optional local favorites.
-
-Core page content should remain readable without heavy client-side rendering.
-
-### Favorites
-
-Favorites are optional for MVP. If included, use `localStorage` only. Do not add accounts or authentication for launch.
-
----
-
-## 13. Design Requirements
-
-### Visual direction
-
-The interface should feel like:
-
-- a museum object page,
-- an editorial object study,
-- a quiet learning tool,
-- a refined typographic website.
-
-### UI requirements
-
-- One dominant glyph.
-- Generous whitespace.
-- Strong but simple typography.
-- Restrained color palette.
-- Minimal chrome.
-- Subtle hover and focus states.
-- Clear mobile layout.
-- No dashboard-like density.
-
-### Component highlighting
-
-The component highlight should be calm and legible.
-
-Requirements:
-
-- selected component is visibly distinct,
-- non-selected components may fade slightly,
-- labels should not cover the glyph awkwardly,
-- the effect should feel explanatory, not flashy,
-- reduced-motion mode should disable animated transitions.
-
----
-
-## 14. Editorial Guidelines
-
-Each character page should be short.
-
-### Copy limits
+The existing `glyph.sourcePath` remains the local Monohanzi asset path;
+`glyph.source.path` identifies the upstream file.
+
+Each review value is `pending` or `approved`; only `approved` is publishable.
+The main explanation cites the relevant character sources, while every
+structural or historical component claim includes at least one `sourceRefs`
+entry. This makes every non-obvious claim traceable without displaying citations
+inside the primary reading flow.
+
+`status: published` is a strict contract. It requires:
+
+- complete required copy within the editorial limits,
+- 2–4 useful examples and at least one valid next destination,
+- an inspectable, visually reviewed SVG,
+- exact agreement between SVG and data component IDs,
+- required accessibility metadata and behavior,
+- cited and reviewed structural or historical claims,
+- complete asset provenance, and
+- passing automated validation and production build.
+
+Any missing asset, unsuitable form, ambiguous unlabeled grouping, incomplete
+citation, broken destination, or failed check keeps the entry in `draft`.
+
+### Editorial limits
 
 - Core meaning: 1–4 words.
 - Short gloss: one sentence.
 - Main explanation: 1–3 short sentences.
-- Component note: 1–2 short sentences per component.
-- Examples: 2–4 words.
-- Historical note: optional and secondary.
+- Component note: 1–2 short sentences.
+- Examples: 2–4 per character.
+- Historical material: optional, sourced, and secondary.
 
-### Explanation style
+Use concrete language and distinguish meaning, sound, visual analogy, and
+history. Avoid long debates, decorative prose, exhaustive metadata, and claims
+whose confidence cannot be communicated honestly.
 
-Write for clarity first.
+## 6. Technical Architecture
 
-Prefer:
+Monohanzi uses Astro with static output, TypeScript, structured JSON character
+data, inline static SVG assets, a generated local JSON search index, and
+client-side JavaScript only for glyph interaction, search, and navigation.
+Routes and assets must respect Astro’s configured base path. GitHub Pages is the
+deployment target.
 
-- concrete language,
-- short sentences,
-- high-confidence claims,
-- visible distinctions between meaning, sound, and history.
+Keep the current repository layout: character data under `src/data/`, glyphs
+under `src/assets/glyphs/`, pages and components under `src/`, and pipeline or
+validation utilities under `scripts/`. Do not introduce a backend for core MVP
+behavior.
 
-Avoid:
+The build must reject published entries when an SVG is missing, viewBox or
+coordinates violate the asset contract, component IDs differ between data and
+SVG, stable IDs or accessibility labels are absent, provenance/review fields are
+incomplete, or a published internal link cannot resolve. Visual correctness and
+claim accuracy remain explicit human review gates because structural validation
+cannot prove them.
 
-- long philological debates,
-- too many derived meanings,
-- decorative prose,
-- excessive metadata,
-- pretending an uncertain decomposition is certain.
+## 7. Acceptance Criteria
 
----
+Phase 0 is complete when all five structural cases pass data/SVG validation,
+coordinate checks, production build, desktop and mobile interaction checks,
+keyboard and screen-reader-oriented review, reduced-motion review, visual glyph
+review, citation review, and provenance review. The pipeline must demonstrate a
+documented path for both a usable HanziVG source and a missing or unsuitable one.
 
-## 15. Success Metrics
+The MVP is complete when:
 
-### North-star metric
+- exactly 100 character entries satisfy the publication contract,
+- every published page has a reviewed inspectable glyph,
+- search handles simplified and stored traditional forms plus all specified
+  metadata,
+- random and collection navigation lead only to published pages,
+- all published component and related links resolve,
+- the method and asset credits/license pages are present,
+- automated validation and the static production build pass, and
+- the built site works beneath `/monohanzi/` on GitHub Pages.
 
-**Meaningfully explored characters per session.**
-
-A character is meaningfully explored when a user:
-
-- opens a character page,
-- interacts with at least one component, example, or related link,
-- and continues to another page or collection item.
-
-### Secondary metrics
-
-- Search success rate.
-- Random-to-next clickthrough rate.
-- Component hover/tap rate.
-- Average character pages per session.
-- Collection completion rate.
-- Return visits.
-- User-reported clarity.
-
-### Qualitative signals
-
-Users describe the product as:
-
-- beautiful,
-- calm,
-- clear,
-- memorable,
-- less intimidating than a dictionary.
-
----
-
-## 16. Risks and Mitigations
-
-### Risk: SVG generation becomes too time-consuming
-
-Mitigation:
-
-- start with a small curated corpus,
-- prioritize high-value characters,
-- automate simple cases,
-- manually correct important pages,
-- allow non-inspectable fallback pages for hard cases only if clearly marked.
-
-### Risk: Components do not align perfectly
-
-Mitigation:
-
-- use one SVG coordinate system per character,
-- generate component groups from the same outline source,
-- validate SVG/data consistency in the build,
-- manually inspect MVP glyphs.
-
-### Risk: Minimalism becomes under-explanation
-
-Mitigation:
-
-- require core meaning, component explanation, and examples on every page,
-- test whether users can explain the character after reading the page.
-
-### Risk: The product drifts into a dictionary clone
-
-Mitigation:
-
-- keep strict copy limits,
-- avoid exhaustive metadata in the default view,
-- preserve the object-centered page hierarchy.
-
-### Risk: Etymology is misleading
-
-Mitigation:
-
-- label uncertain explanations,
-- distinguish visual mnemonic from historical origin,
-- avoid presenting folk etymology as fact.
-
----
-
-## 17. Roadmap
-
-### Phase 0 — Prototype
-
-- Build 5–10 polished character pages.
-- Test SVG component highlighting.
-- Validate alignment strategy.
-- Test desktop hover, keyboard focus, and mobile tap.
-- Confirm content format and build pipeline.
-
-### Phase 1 — MVP
-
-- 100–300 character pages.
-- Search.
-- Random mode.
-- Curated collections.
-- Static GitHub Pages deployment.
-- Inspectable SVGs for priority characters.
-- Method page explaining components and uncertainty.
-
-### Phase 2 — Improvement
-
-- More collections.
-- Better phonetic family pages.
-- Confusable-pair pages.
-- Local favorites.
-- More polished SVG generation and validation.
-- Optional audio.
-
-### Phase 3 — Advanced Learning
-
-- Sentence examples.
-- Stroke overlays.
-- Personalized paths.
-- Teacher/editor tooling.
-- Public data export or API.
-
----
-
-## 18. Final Product Definition
-
-Monohanzi is a curated, static, object-centered learning experience for Chinese characters.
-
-Its core differentiator is not dictionary completeness. Its differentiator is the combination of:
-
-- a beautiful one-character page,
-- direct inspection of the character’s visible components,
-- concise pedagogical explanation,
-- useful examples,
-- and meaningful linked exploration.
-
-The MVP should prove that a learner can look at a character, hover or tap its parts, understand why it looks the way it does, and naturally continue to the next related character.
+No analytics or formal measurement program is required. Product quality is
+defined by these observable content, interaction, accessibility, provenance,
+and deployment outcomes.
