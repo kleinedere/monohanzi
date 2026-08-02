@@ -48,3 +48,17 @@ The current five SVGs preserve HanziVG’s original stroke paths and adapt only
 their component groups, IDs, and accessibility metadata. They are separately
 licensed under CC BY-SA 3.0; see `ASSET_LICENSES.md` and the in-app Method and
 Credits pages.
+
+## Deploy to GitHub Pages
+
+Every push to `main` runs [the Pages workflow](.github/workflows/deploy.yml).
+It installs the lockfile dependencies, validates the glyph assets, builds the
+static site beneath `/monohanzi/`, and publishes the result through GitHub
+Pages. The workflow can also be started manually from the Actions tab.
+
+In the repository settings, set Pages → Build and deployment → Source to
+**GitHub Actions**. The deployed address is:
+
+```text
+https://<repository-owner>.github.io/monohanzi/
+```
