@@ -491,11 +491,14 @@ dd {
 }
 
 .component-detail-stack {
-  min-height: 178px;
+  height: 260px;
+  min-height: 260px;
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.76);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
 .component-detail h2,
